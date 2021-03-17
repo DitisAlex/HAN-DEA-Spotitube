@@ -1,4 +1,4 @@
-# Spotitube [![Build Status](https://travis-ci.org/HANICA-DEA/spotitube.svg?branch=master)](https://travis-ci.org/HANICA-DEA/spotitube) [![Coverage Status](https://coveralls.io/repos/github/HANICA-DEA/spotitube/badge.svg?branch=master)](https://coveralls.io/github/HANICA-DEA/spotitube?branch=master)
+# Spotitube
 
 Java Assignment for the course OOSE-DEA at the [HAN University of Applied Sciences](https://www.han.nl/).
 This repository contains the back-end, the front-end can be found [here](https://github.com/HANICA-DEA/spotitube).
