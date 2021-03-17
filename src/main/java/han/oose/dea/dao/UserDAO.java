@@ -23,15 +23,16 @@ public class UserDAO implements IUserDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                User user = new User(rs.getInt("userID"));
+                User user = new User();
                 user.setUsername(rs.getString("username"));
                 user.setToken(rs.getString("token"));
                 return user;
             }
-
+            return null;
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
         return null;
     }
+
 }

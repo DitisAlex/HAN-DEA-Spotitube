@@ -1,0 +1,4 @@
+# Created at 2021-03-17T21:34:15.099
+Boot Manifest-JAR contains absolute paths in classpath 'D:\OOSE\Spotitube - DEA\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+
