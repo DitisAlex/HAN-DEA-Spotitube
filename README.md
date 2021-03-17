@@ -1,2 +1,6 @@
-# HAN-DEA-Spotitube
-School Project for DEA - Spotitube
+# Build
+mvn clean package && docker build -t han.oose.dea/DEA Spotitube .
+
+# RUN
+
+docker rm -f DEA Spotitube || true && docker run -d -p 8080:8080 -p 4848:4848 --name DEA Spotitube han.oose.dea/DEA Spotitube 
