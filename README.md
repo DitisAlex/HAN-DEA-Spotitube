@@ -1,21 +1,12 @@
 # Spotitube [![Build Status](https://travis-ci.org/HANICA-DEA/spotitube.svg?branch=master)](https://travis-ci.org/HANICA-DEA/spotitube) [![Coverage Status](https://coveralls.io/repos/github/HANICA-DEA/spotitube/badge.svg?branch=master)](https://coveralls.io/github/HANICA-DEA/spotitube?branch=master)
 
-This repository contains a front-end for the final programming assignment 
-of the course OOSE-DEA at the [HAN University of Applied Sciences](https://www.han.nl/).
+Java Assignment for the course OOSE-DEA at the [HAN University of Applied Sciences](https://www.han.nl/).
+This repository contains the back-end, the front-end can be found [here](https://github.com/HANICA-DEA/spotitube).
 
 ## Hosted version
 
-Use this version if you do not want to install it locally:
-
+The hosted front-end application can be found here:
 [Spotitube through HTTP](https://jenkins.aimsites.nl/spotitube/)
-
-## Enabling CORS headers in your JavaEE container
-
-To use this Spotitube Client with your own Spotitube Server, you will need to enable CORS headers
-in your JavaEE container. 
-
-This is required because the Client is served from a different domain than the Server. Your browser will only allow this 
-if the Server has the CORS Headers set in its HTTP response. More information about this will be given during lessons.
  
 ## API
 
@@ -419,47 +410,4 @@ It will expect a response containing the complete list of tracks for the given p
             }
           ]
 }
-```
-
-## TIPS
-* To implement the DataMapper pattern you can use the code from the book, e.g. the AbstractMapper class. This class has to be modified a little to confom to the JDBC standard but is app. 80% functional.
-* When you save the password in the database using a password type, you can check the value from the database against a hashed version of the password given by the user: ```if (DigestUtils.sha256Hex(pass_given_by_user).equals(pass_from_the_database))) ``` DigestUtils is a class from the Commons Codecs library:
-```
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
-        </dependency>
-```
-
-* To generate a unique token you can use the UUID class: ```UUID.randomUUID()```. Save the generated token in memory (e.g. a List or Map) or in the database.
-
-## For local installation
-
-To install the client locally you will need Node.js and angular-cli.
-
-### Install Node.js
-
-Download and install [Node.js](https://nodejs.org/en/).
-
-### Install angular-cli
-
-To install [Angular CLI](https://github.com/angular/angular-cli), run the following command in admin/superuser mode:
-```
-  npm install -g @angular/cli
-```
-
-### Run the Client
- 
-You can now use Angular CLI to run a local server that hosts the Client. To do this, run the following command:
-```
-ng serve
-```
-
-This will run a server on http://localhost:4200.
-
-So navigate your browser to
-
-```
-http://localhost:4200/
 ```
