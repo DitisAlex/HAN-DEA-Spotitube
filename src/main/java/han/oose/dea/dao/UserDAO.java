@@ -14,7 +14,7 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public User checkAuthenticated(String username, String password) {
-        String sql = "select * from users where username = ? AND password = ?";
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -35,4 +35,7 @@ public class UserDAO implements IUserDAO {
         return null;
     }
 
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }

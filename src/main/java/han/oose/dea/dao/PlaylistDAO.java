@@ -81,4 +81,7 @@ public class PlaylistDAO implements IPlaylistDAO{
             exception.printStackTrace();
         }
     }
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }

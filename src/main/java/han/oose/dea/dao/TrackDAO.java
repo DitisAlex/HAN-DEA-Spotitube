@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Default
 public class TrackDAO implements ITrackDAO{
@@ -84,5 +83,7 @@ public class TrackDAO implements ITrackDAO{
             exception.printStackTrace();
         }
     }
-
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }

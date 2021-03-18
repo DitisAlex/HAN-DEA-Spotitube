@@ -45,4 +45,8 @@ public class TokenDAO implements ITokenDAO{
         }
         return null;
     }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }

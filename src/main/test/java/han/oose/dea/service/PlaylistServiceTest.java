@@ -22,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -35,7 +36,7 @@ public class PlaylistServiceTest {
     private TokenDTO tokenDTO;
 
     @BeforeEach()
-    public void setup(){
+    public void setup() {
         playlistService = new PlaylistService();
 
         playlistDTO = new PlaylistDTO();
@@ -58,19 +59,17 @@ public class PlaylistServiceTest {
      * Happy Path - gather all playlists successfully
      * [GET] /playlists
      */
-    // @Test
-    public void getAllPlaylistsInvalidTokenTest(){
+
+    //@Test
+    public void getAllPlaylistsInvalidTokenTest() {
 
         // Arrange
         IPlaylistDAO playlistDAOMock = mock(IPlaylistDAO.class);
-        PlaylistService playlistServiceMock = mock(PlaylistService.class);
-        when(playlistDAOMock.getPlaylists()).thenReturn(playlistsDTO.playlists);
-        playlistService.setPlaylistDAO(playlistDAOMock);
+        when(playlistDAOMock.getPlaylists()).thenReturn(Collections.emptyList());
 
         // Assert
         assertThrows(ForbiddenException.class, () -> {
             playlistService.getAllPlaylists(tokenDTO.token);
         });
     }
-
 }
