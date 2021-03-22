@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +25,7 @@ public class UserDAOTest {
     private ResultSet resultSet;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         dataSource = mock(DataSource.class);
         connection = mock(Connection.class);
         preparedStatement = mock(PreparedStatement.class);
@@ -36,8 +35,12 @@ public class UserDAOTest {
         userDAO.setDataSource(dataSource);
     }
 
+    /**
+     * DAO FOR:
+     * [POST] /login
+     */
     @Test
-    public void checkAuthenticatedWithValidCredentialsTest(){
+    public void checkAuthenticatedWithValidCredentialsTest() {
         try {
             // Arrange
             String expectedSQL = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -56,12 +59,12 @@ public class UserDAOTest {
             User result = userDAO.checkAuthenticated(USERNAME, PASSWORD);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection, SQL query connection & set parameters
             verify(preparedStatement).setString(1, USERNAME);
             verify(preparedStatement).setString(2, PASSWORD);
             verify(preparedStatement).executeQuery();
 
-            assertEquals(mockUser.getUsername(), result.getUsername());
+            assertEquals(mockUser.getUsername(), result.getUsername()); // Checks if expected is same as result
             assertEquals(mockUser.getToken(), result.getToken());
 
         } catch (Exception e) {
@@ -69,8 +72,12 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * DAO FOR:
+     * [POST] /login
+     */
     @Test
-    public void checkAuthenticatedWithInvalidCredentialsTest(){
+    public void checkAuthenticatedWithInvalidCredentialsTest() {
         try {
             // Arrange
             String expectedSQL = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -84,10 +91,10 @@ public class UserDAOTest {
             User result = userDAO.checkAuthenticated(USERNAME, PASSWORD);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection & SQL query connection
             verify(preparedStatement).executeQuery();
 
-            assertNull(result);
+            assertNull(result); // Checks if result is equal to null
 
         } catch (Exception e) {
             fail(e);

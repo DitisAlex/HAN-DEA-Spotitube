@@ -1,12 +1,9 @@
 package han.oose.dea.domain;
 
-import java.util.List;
-
 public class Playlist {
     private int id;
     private String name;
     private String owner;
-    private List<Track> tracks;
     private int length;
 
     public int getId(){return id;}
@@ -20,12 +17,6 @@ public class Playlist {
     public String getOwner(){return owner;}
 
     public void setOwner(String owner){this.owner = owner;}
-
-    public List<Track> getTracks(){return tracks;}
-
-    public void setTracks(List<Track> tracks) {
-        this.tracks = tracks;
-    }
 
     public int getLength() {
         return length;

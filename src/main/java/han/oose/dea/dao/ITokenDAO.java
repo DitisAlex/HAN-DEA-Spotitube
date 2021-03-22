@@ -1,8 +1,8 @@
 package han.oose.dea.dao;
 
-import han.oose.dea.domain.Token;
+import han.oose.dea.domain.User;
 
 public interface ITokenDAO {
-    Token addTokenToDB(String token, String username);
+    User addTokenToDB(String token, String username);
     String verifyToken(String token);
 }

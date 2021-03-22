@@ -2,8 +2,8 @@ package han.oose.dea.service;
 
 import han.oose.dea.dao.IPlaylistDAO;
 import han.oose.dea.dao.ITokenDAO;
-import han.oose.dea.dao.PlaylistDAO;
 import han.oose.dea.domain.Playlist;
+import han.oose.dea.exceptions.ForbiddenException;
 import han.oose.dea.service.dto.PlaylistDTO;
 import han.oose.dea.service.dto.PlaylistsDTO;
 
@@ -23,14 +23,14 @@ public class PlaylistService {
     @GET
     @Path("/playlists")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllPlaylists(@QueryParam("token") String token){
+    public Response getAllPlaylists(@QueryParam("token") String token) throws ForbiddenException {
         return Response.status(200).entity(listToDTOConverter(iTokenDAO.verifyToken(token))).build();
     }
 
     @DELETE
     @Path("/playlists/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePlaylist(@PathParam("id") int id, @QueryParam("token") String token){
+    public Response deletePlaylist(@PathParam("id") int id, @QueryParam("token") String token) throws ForbiddenException {
         iPlaylistDAO.deletePlaylist(id);
         return Response.status(200).entity(listToDTOConverter(iTokenDAO.verifyToken(token))).build();
     }
@@ -38,7 +38,7 @@ public class PlaylistService {
     @POST
     @Path("/playlists")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createNewPlaylist(PlaylistDTO playlistDTO, @QueryParam("token") String token){
+    public Response createNewPlaylist(PlaylistDTO playlistDTO, @QueryParam("token") String token) throws ForbiddenException {
         String username = iTokenDAO.verifyToken(token);
         iPlaylistDAO.addPlaylist(playlistDTO.name, username);
         return Response.status(201).entity(listToDTOConverter(username)).build();
@@ -47,12 +47,12 @@ public class PlaylistService {
     @PUT
     @Path("/playlists/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updatePlaylist(PlaylistDTO playlistDTO, @PathParam("id") int id, @QueryParam("token") String token) {
+    public Response updatePlaylist(PlaylistDTO playlistDTO, @PathParam("id") int id, @QueryParam("token") String token) throws ForbiddenException {
         iPlaylistDAO.updatePlaylist(playlistDTO.name, id);
         return Response.status(200).entity(listToDTOConverter(iTokenDAO.verifyToken(token))).build();
     }
 
-    private PlaylistsDTO listToDTOConverter(String username){
+    public PlaylistsDTO listToDTOConverter(String username) throws ForbiddenException {
         if(username == null) throw new ForbiddenException();
         List<Playlist> playlist = iPlaylistDAO.getPlaylists();
 
@@ -70,6 +70,7 @@ public class PlaylistService {
             totalLength += p.getLength();
         }
         playlistsDTO.length = totalLength;
+
         return playlistsDTO;
     }
 

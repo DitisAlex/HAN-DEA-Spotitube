@@ -1,6 +1,6 @@
 package han.oose.dea.dao;
 
-import han.oose.dea.domain.Token;
+import han.oose.dea.domain.User;
 
 import javax.annotation.Resource;
 import javax.enterprise.inject.Default;
@@ -13,7 +13,7 @@ public class TokenDAO implements ITokenDAO{
     DataSource dataSource;
 
     @Override
-    public Token addTokenToDB(String token, String username){
+    public User addTokenToDB(String token, String username){
         String sql = "UPDATE users SET token = ? WHERE username = ?";
 
         try (Connection connection = dataSource.getConnection()){

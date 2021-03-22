@@ -1,14 +1,15 @@
 package han.oose.dea.dao;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 public class TokenDAOTest {
@@ -33,8 +34,12 @@ public class TokenDAOTest {
         tokenDAO.setDataSource(dataSource);
     }
 
+    /**
+     * DAO FOR:
+     * [POST] /login
+     */
     @Test
-    public void addTokenToUserDBTest(){
+    public void addTokenToUserDBTest() {
         try {
             // Arrange
             String expectedSQL = "UPDATE users SET token = ? WHERE username = ?";
@@ -46,7 +51,7 @@ public class TokenDAOTest {
             tokenDAO.addTokenToDB(TOKEN, USERNAME);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection, SQL execution & set parameter
             verify(preparedStatement).setString(1, TOKEN);
             verify(preparedStatement).setString(2, USERNAME);
             verify(preparedStatement).executeUpdate();
@@ -56,8 +61,12 @@ public class TokenDAOTest {
         }
     }
 
+    /**
+     * DAO FOR:
+     * Login/Playlist services
+     */
     @Test
-    public void verifyTokenTest(){
+    public void verifyTokenTest() {
         try {
             // Arrange
             String expectedSQL = "SELECT * FROM users WHERE token = ?";
@@ -72,7 +81,7 @@ public class TokenDAOTest {
             String result = tokenDAO.verifyToken(TOKEN);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection, SQL execution & set parameter
             verify(preparedStatement).setString(1, TOKEN);
             verify(preparedStatement).executeQuery();
 

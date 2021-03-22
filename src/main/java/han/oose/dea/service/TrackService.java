@@ -3,15 +3,11 @@ package han.oose.dea.service;
 import han.oose.dea.dao.IPlaylistDAO;
 import han.oose.dea.dao.ITokenDAO;
 import han.oose.dea.dao.ITrackDAO;
-import han.oose.dea.domain.Playlist;
 import han.oose.dea.domain.Track;
-import han.oose.dea.service.dto.PlaylistDTO;
-import han.oose.dea.service.dto.PlaylistsDTO;
 import han.oose.dea.service.dto.TrackDTO;
 import han.oose.dea.service.dto.TracksDTO;
 
 import javax.inject.Inject;
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,8 +16,6 @@ import java.util.List;
 
 @Path("")
 public class TrackService {
-    private IPlaylistDAO iPlaylistDAO;
-    private ITokenDAO iTokenDAO;
     private ITrackDAO iTrackDAO;
 
     @GET
@@ -55,7 +49,7 @@ public class TrackService {
         return Response.status(201).entity(listToDTOConverter(id, false)).build();
     }
 
-    private TracksDTO listToDTOConverter(int playlistID, boolean addTrack){
+    public TracksDTO listToDTOConverter(int playlistID, boolean addTrack){
         List<Track> track = iTrackDAO.getTracks(playlistID, addTrack);
 
         TracksDTO tracksDTO = new TracksDTO();
@@ -75,16 +69,6 @@ public class TrackService {
             tracksDTO.tracks.add(trackDTO);
         }
         return tracksDTO;
-    }
-
-    @Inject
-    public void setPlaylistDAO(IPlaylistDAO iPlaylistDAO){
-        this.iPlaylistDAO = iPlaylistDAO;
-    }
-
-    @Inject
-    public void setTokenDAO(ITokenDAO iTokenDAO){
-        this.iTokenDAO = iTokenDAO;
     }
 
     @Inject

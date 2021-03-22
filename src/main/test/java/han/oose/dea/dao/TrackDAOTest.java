@@ -5,14 +5,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 public class TrackDAOTest {
@@ -34,7 +33,7 @@ public class TrackDAOTest {
     private ResultSet resultSet;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         dataSource = mock(DataSource.class);
         connection = mock(Connection.class);
         preparedStatement = mock(PreparedStatement.class);
@@ -44,8 +43,12 @@ public class TrackDAOTest {
         trackDAO.setDataSource(dataSource);
     }
 
+    /**
+     * DAO FOR:
+     * [GET] /tracks
+     */
     @Test
-    public void getPlaylistTracksTest(){
+    public void getPlaylistTracksTest() {
         try {
             // Arrange
             String expectedSQL = "SELECT * FROM tracks t " +
@@ -84,10 +87,10 @@ public class TrackDAOTest {
             tracks.add(trackMock);
 
             // Arrange
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection & SQL query connection
             verify(preparedStatement).executeQuery();
 
-            assertEquals(resultSet.getInt("id"), TRACKID);
+            assertEquals(resultSet.getInt("id"), TRACKID); // Checks if expected is same as result
             assertEquals(resultSet.getString("title"), TITLE);
             assertEquals(resultSet.getString("performer"), PERFORMER);
             assertEquals(resultSet.getInt("duration"), DURATION);
@@ -97,13 +100,17 @@ public class TrackDAOTest {
             assertEquals(resultSet.getString("description"), DESCRIPTION);
             assertEquals(resultSet.getBoolean("offlineAvailable"), OFFLINEAVAILABLE);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             fail(e);
         }
     }
 
+    /**
+     * DAO FOR:
+     * [GET] /playlists/{id}/tracks
+     */
     @Test
-    public void getAddTracksTest(){
+    public void getAddTracksTest() {
         try {
             // Arrange
             String expectedSQL = "SELECT DISTINCT * FROM tracks t " +
@@ -143,10 +150,10 @@ public class TrackDAOTest {
             tracks.add(trackMock);
 
             // Arrange
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection & SQL query connection
             verify(preparedStatement).executeQuery();
 
-            assertEquals(resultSet.getInt("id"), TRACKID);
+            assertEquals(resultSet.getInt("id"), TRACKID); // Checks if expected is same as result
             assertEquals(resultSet.getString("title"), TITLE);
             assertEquals(resultSet.getString("performer"), PERFORMER);
             assertEquals(resultSet.getInt("duration"), DURATION);
@@ -156,13 +163,17 @@ public class TrackDAOTest {
             assertEquals(resultSet.getString("description"), DESCRIPTION);
             assertEquals(resultSet.getBoolean("offlineAvailable"), OFFLINEAVAILABLE);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             fail(e);
         }
     }
 
+    /**
+     * DAO FOR:
+     * [DELETE] /playlists/{playlistID}/tracks/{trackID}
+     */
     @Test
-    public void removeTrackFromPlaylist(){
+    public void removeTrackFromPlaylist() {
         try {
             // Arrange
             String expectedSQL = "DELETE FROM playlist_tracks WHERE trackID = ? AND playlistID = ?";
@@ -174,18 +185,18 @@ public class TrackDAOTest {
             trackDAO.removeTrackFromPlaylist(PLAYLISTID, TRACKID);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL);  // Verifies connection, SQL query connection & set parameters
             verify(preparedStatement).setInt(1, TRACKID);
             verify(preparedStatement).setInt(2, PLAYLISTID);
             verify(preparedStatement).executeUpdate();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             fail(e);
         }
     }
 
     @Test
-    public void addTrackToPlaylist(){
+    public void addTrackToPlaylist() {
         try {
             // Arrange
             String expectedSQL = "INSERT INTO playlist_tracks (playlistID, trackID, offlineAvailable) VALUES (?, ?, ?)";
@@ -197,13 +208,13 @@ public class TrackDAOTest {
             trackDAO.addTrackToPlaylist(PLAYLISTID, TRACKID, OFFLINEAVAILABLE);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection, SQL query connection & set parameters
             verify(preparedStatement).setInt(1, PLAYLISTID);
             verify(preparedStatement).setInt(2, TRACKID);
             verify(preparedStatement).setBoolean(3, OFFLINEAVAILABLE);
             verify(preparedStatement).executeUpdate();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             fail(e);
         }
     }

@@ -5,13 +5,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 public class PlaylistDAOTest {
@@ -27,7 +27,7 @@ public class PlaylistDAOTest {
     private ResultSet resultSet;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         dataSource = mock(DataSource.class);
         connection = mock(Connection.class);
         preparedStatement = mock(PreparedStatement.class);
@@ -37,8 +37,12 @@ public class PlaylistDAOTest {
         playlistDAO.setDataSource(dataSource);
     }
 
+    /**
+     * DAO FOR:
+     * [GET] /playlists
+     */
     @Test
-    public void getAllPlaylists(){
+    public void getAllPlaylists() {
         try {
             // Arrange
             String expectedSQL = "SELECT DISTINCT p.id AS id, p.name AS name, p.owner AS owner, (SELECT SUM(duration) FROM tracks t " +
@@ -68,22 +72,25 @@ public class PlaylistDAOTest {
             playlists.add(playlistMock);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
-            verify(preparedStatement).executeQuery();
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection
+            verify(preparedStatement).executeQuery();         // & SQL statement execution
 
-            assertEquals(resultSet.getInt("id"), PLAYLISTID);
+            assertEquals(resultSet.getInt("id"), PLAYLISTID); // Checks if expected is same as result
             assertEquals(resultSet.getString("name"), PLAYLISTNAME);
             assertEquals(resultSet.getString("owner"), OWNER);
             assertEquals(resultSet.getInt("duration"), LENGTH);
-
 
         } catch (Exception e) {
             fail(e);
         }
     }
 
+    /**
+     * DAO FOR:
+     * [DELETE] /playlists/{id}
+     */
     @Test
-    public void deletePlaylistTest(){
+    public void deletePlaylistTest() {
         try {
             // Arrange
             String expectedSQL = "DELETE FROM playlist WHERE id = ?";
@@ -95,17 +102,21 @@ public class PlaylistDAOTest {
             playlistDAO.deletePlaylist(PLAYLISTID);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection, SQL execution & set parameter
             verify(preparedStatement).setInt(1, PLAYLISTID);
             verify(preparedStatement).executeUpdate();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             fail(e);
         }
     }
 
+    /**
+     * DAO FOR:
+     * [POST] /playlists
+     */
     @Test
-    public void addPlaylistTest(){
+    public void addPlaylistTest() {
         try {
             // Arrange
             String expectedSQL = "INSERT INTO playlist (name, owner) VALUES (?, ?)";
@@ -117,18 +128,22 @@ public class PlaylistDAOTest {
             playlistDAO.addPlaylist(PLAYLISTNAME, OWNER);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection, SQL execution & set parameter
             verify(preparedStatement).setString(1, PLAYLISTNAME);
             verify(preparedStatement).setString(2, OWNER);
             verify(preparedStatement).executeUpdate();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             fail(e);
         }
     }
 
+    /**
+     * DAO FOR:
+     * [PUT] /playlists/{id}
+     */
     @Test
-    public void updatePlaylistTest(){
+    public void updatePlaylistTest() {
         try {
             // Arrange
             String expectedSQL = "UPDATE playlist SET name = ? WHERE id = ?";
@@ -140,12 +155,12 @@ public class PlaylistDAOTest {
             playlistDAO.updatePlaylist(PLAYLISTNAME, PLAYLISTID);
 
             // Assert
-            verify(connection).prepareStatement(expectedSQL);
+            verify(connection).prepareStatement(expectedSQL); // Verifies connection, SQL execution & set parameter
             verify(preparedStatement).setString(1, PLAYLISTNAME);
             verify(preparedStatement).setInt(2, PLAYLISTID);
             verify(preparedStatement).executeUpdate();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             fail(e);
         }
     }
