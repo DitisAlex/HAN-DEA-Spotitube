@@ -3,6 +3,7 @@ package han.oose.dea.service;
 import han.oose.dea.dao.ITokenDAO;
 import han.oose.dea.dao.IUserDAO;
 import han.oose.dea.domain.User;
+import han.oose.dea.exceptions.ForbiddenException;
 import han.oose.dea.exceptions.UnauthorizedException;
 import han.oose.dea.service.dto.TokenDTO;
 import han.oose.dea.service.dto.UserDTO;
@@ -26,7 +27,7 @@ public class LoginService {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(UserDTO userDTO) throws UnauthorizedException {
+    public Response login(UserDTO userDTO) throws UnauthorizedException, ForbiddenException {
         User user = iUserDAO.checkAuthenticated(userDTO.user, userDTO.password);
 
         if(user == null) throw new UnauthorizedException();
@@ -43,12 +44,12 @@ public class LoginService {
     }
 
     @Inject
-    public void setUserDAO(IUserDAO iUserDAO) {
-        this.iUserDAO = iUserDAO;
+    public void setUserDAO(IUserDAO userDAOMongo) {
+        this.iUserDAO = userDAOMongo;
     }
 
     @Inject
-    public void setTokenDAO(ITokenDAO iTokenDAO){
-        this.iTokenDAO = iTokenDAO;
+    public void setTokenDAO(ITokenDAO tokenDAOMongo){
+        this.iTokenDAO = tokenDAOMongo;
     }
 }

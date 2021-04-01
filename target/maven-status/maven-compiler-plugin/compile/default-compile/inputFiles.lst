@@ -4,11 +4,11 @@ D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\exceptions\ForbiddenException
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\dao\IPlaylistDAO.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\service\PlaylistService.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\dao\PlaylistDAO.java
-D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\domain\Token.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\exceptions\UnauthorizedException.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\service\dto\TokenDTO.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\domain\Track.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\service\LoginService.java
+D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\dao\UserDAOMongo.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\dao\ITokenDAO.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\dao\UserDAO.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\service\dto\TrackDTO.java
@@ -23,3 +23,4 @@ D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\dao\ITrackDAO.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\service\dto\TracksDTO.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\domain\User.java
 D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\util\TokenGenerator.java
+D:\OOSE\Spotitube - DEA\src\main\java\han\oose\dea\dao\TokenDAOMongo.java
